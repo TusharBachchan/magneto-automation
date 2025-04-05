@@ -19,14 +19,15 @@ class SignupPage {
   }
   /**** Filling the Create Account Form ****/
   async registerUser(user) {
+    console.log('Filling signup form with test data...');
     await t
       .typeText(this.firstName, user.firstName)
       .typeText(this.lastName, user.lastName)
       .typeText(this.email, user.email)
       .typeText(this.password, user.password)
       .typeText(this.confirmPassword, user.password)
-      .click(this.createAccountBtn)
-      .wait(5000)
+      console.log('Submitting the signup form...');
+      await t.click(this.createAccountBtn)
   }
 
   async assertRegistrationSuccess(user) {
