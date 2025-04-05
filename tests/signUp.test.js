@@ -1,18 +1,19 @@
 import { Selector } from 'testcafe';
 import signupPage from '../page-models/signupPage';
-
-const user = {
-  firstName: 'Tushar',
-  lastName: 'Bachchan',
-  email: `tushar_${Date.now()}@test.com`,
-  password: 'Test@1234'
-};
+import homePage from '../page-models/homePage';
+ const data = require("../test-data/user-data.json");
+ const signUpData = {...data[0], email: `tushar_${Date.now()}@test.com`};
 
 fixture`User Signup Flow`
-  .page`https://magento.softwaretestingboard.com`;
+    .page `${signUpData.url}`
+    .beforeEach(async t => {
+        await t.maximizeWindow();
+    });
 
 test('Given a user is on the signup page, when they fill valid info, then account is created', async t => {
-  await t.click(Selector('a').withExactText("Create an Account"));
-  await signupPage.registerUser(user);
-  await signupPage.assertRegistrationSuccess(user);
+    console.log('Starting signup test case...');
+    await t.click(homePage.createAnAccount);
+    await signupPage.registerUser(signUpData);
+    await signupPage.assertRegistrationSuccess(signUpData);
+    console.log('End of signup test case...');
 });
